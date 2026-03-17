@@ -19,5 +19,5 @@ def predict(years:int):
     years = np.array(years)
     years = years.reshape(-1,1)
     prediction = model.predict(years)
-    return {"Predicted Salary": float(prediction[0])}
+    return {"prediction": float(prediction[0])}
 
