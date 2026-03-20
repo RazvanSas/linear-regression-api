@@ -17,7 +17,7 @@ app.add_middleware(
 class Data(BaseModel):
     years: int
 
-@app.get("/predict")
+@app.post("/predict")
 def predict(data: Data):
     years = np.array(data.years)
     years = years.reshape(-1,1)
