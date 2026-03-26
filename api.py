@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 import joblib
@@ -19,6 +19,8 @@ class Data(BaseModel):
 
 @app.post("/predict")
 def predict(data: Data):
+    if data.years < 0:
+        raise HTTPException(status_code = 400, detail = "Years cannot be negative")
     years = np.array(data.years)
     years = years.reshape(-1,1)
     prediction = model.predict(years)
