@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 import joblib
-from pydantic import BaseModel
+from pydantic import BaseModel, StrictInt
 app = FastAPI()
 
 model = joblib.load('model.pkl')
@@ -15,7 +15,7 @@ app.add_middleware(
 )
 
 class Data(BaseModel):
-    years: int
+    years: StrictInt
 
 @app.post("/predict")
 def predict(data: Data):
@@ -25,4 +25,3 @@ def predict(data: Data):
     years = years.reshape(-1,1)
     prediction = model.predict(years)
     return {"prediction": float(prediction[0])}
-
